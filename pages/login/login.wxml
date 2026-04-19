@@ -1,31 +1,56 @@
 <!--pages/login/login.wxml-->
-<view class="container">
-  <view class="brand-header">
-    <view class="logo-box">AI</view>
-    <text class="title">Welcome</text>
-    <text class="subtitle">{{ isRegister ? '创建您的账号' : '登录以继续' }}</text>
-  </view>
+<view class="login-page">
+  <view class="bg-glow glow-left"></view>
+  <view class="bg-glow glow-right"></view>
 
-  <view class="form-container">
-    <view class="input-group">
-      <input class="input" type="text" placeholder="账号" placeholder-class="ph-style" bindinput="bindUsernameInput" value="{{username}}" />
-    </view>
-    
-    <view class="input-group">
-      <input class="input" type="password" placeholder="密码" placeholder-class="ph-style" bindinput="bindPasswordInput" value="{{password}}" />
+  <view class="login-container">
+    <view class="header">
+      <text class="title-line">{{ isRegister ? '创建账号，' : '您好，' }}</text>
+      <text class="title-line">{{ isRegister ? '开启智能对话' : '欢迎使用 AI 客服' }}</text>
+      <text class="subtitle">{{ isRegister ? '注册新账号以继续' : '登录以继续您的智能对话之旅' }}</text>
     </view>
 
-    <view wx:if="{{isRegister}}" class="input-group">
-      <input class="input" type="text" placeholder="邮箱地址 (选填)" placeholder-class="ph-style" bindinput="bindEmailInput" value="{{email}}" />
-    </view>
+    <view class="form-container">
+      <view class="input-group">
+        <input
+          class="input"
+          type="text"
+          placeholder="请输入手机号或邮箱"
+          placeholder-class="ph-style"
+          bindinput="bindUsernameInput"
+          value="{{username}}"
+        />
+      </view>
 
-    <button class="btn-primary" bindtap="handleAction" loading="{{loading}}">
-      {{ isRegister ? '继 续' : '继 续' }}
-    </button>
-    
-    <view class="toggle-action">
-      <text class="toggle-text">{{ isRegister ? '已有账号？' : '没有账号？' }}</text>
-      <text class="toggle-link" bindtap="toggleAction">{{ isRegister ? '去登录' : '注册一个' }}</text>
+      <view class="input-group">
+        <input
+          class="input"
+          type="password"
+          placeholder="请输入密码"
+          placeholder-class="ph-style"
+          bindinput="bindPasswordInput"
+          value="{{password}}"
+        />
+      </view>
+
+      <view wx:if="{{isRegister}}" class="input-group">
+        <input
+          class="input"
+          type="text"
+          placeholder="请输入邮箱（选填）"
+          placeholder-class="ph-style"
+          bindinput="bindEmailInput"
+          value="{{email}}"
+        />
+      </view>
+
+      <button class="btn-primary" bindtap="handleAction" loading="{{loading}}">
+        {{ isRegister ? '注册并登录' : '登录' }}
+      </button>
+
+      <view class="toggle-action">
+        <text class="toggle-link" bindtap="toggleAction">{{ isRegister ? '已有账号？去登录' : '没有账号？去注册' }}</text>
+      </view>
     </view>
   </view>
 </view>

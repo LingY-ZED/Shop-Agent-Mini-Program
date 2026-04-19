@@ -1,60 +1,60 @@
 <!--index.wxml-->
-<view class="container chat-container">
-  <scroll-view 
-    class="chat-area" 
-    scroll-y="true" 
+<view class="chat-container">
+  <scroll-view
+    class="chat-area"
+    scroll-y="true"
     scroll-into-view="{{scrollToMessage}}"
     scroll-with-animation="{{!isTyping}}"
   >
     <view class="message-list">
       <block wx:for="{{messages}}" wx:key="index">
-        <view class="message-row {{item.role === 'user' ? 'my-row' : 'bot-row'}}" id="msg-{{index}}">
-          <view class="message-content-wrapper">
-            <view class="avatar {{item.role === 'user' ? 'my-avatar' : 'bot-avatar'}}">
-              <image wx:if="{{item.role === 'assistant'}}" src="/assets/ai_avatar.png" mode="aspectFill" class="avatar-img"/>
-              <text wx:else>我</text>
+        <view class="message-item {{item.role === 'user' ? 'user-message' : 'ai-message'}}" id="msg-{{index}}">
+          <view wx:if="{{item.role === 'assistant'}}" class="ai-avatar">
+            <image src="/assets/ai_avatar.png" mode="aspectFill" class="avatar-img" />
+          </view>
+
+          <view wx:if="{{item.role === 'assistant'}}" class="ai-content">
+            <block wx:if="{{item.htmlContent}}">
+              <rich-text nodes="{{item.htmlContent}}" user-select="true"></rich-text>
+            </block>
+            <text wx:else class="message-text" user-select="true">{{item.content}}</text>
+            <view wx:if="{{item.tool_used}}" class="tool-tag">
+              <text class="tag-text">思考过程: {{item.tool_name}}</text>
             </view>
-            <view class="message-bubble">
-              <block wx:if="{{item.htmlContent}}">
-                <rich-text nodes="{{item.htmlContent}}" user-select="true"></rich-text>
-              </block>
-              <text wx:else class="message-text" user-select="true">{{item.content}}</text>
-              <view wx:if="{{item.tool_used}}" class="tool-tag">
-                <text class="tag-text">🛠️ 思考过程: {{item.tool_name}}</text>
-              </view>
-            </view>
+          </view>
+
+          <view wx:else class="user-bubble">
+            <text class="message-text" user-select="true">{{item.content}}</text>
           </view>
         </view>
       </block>
-      
-      <!-- 正在输入状态 -->
-      <view wx:if="{{isTyping}}" class="message-row bot-row" id="msg-typing">
-        <view class="message-content-wrapper">
-          <view class="avatar bot-avatar">
-            <image src="/assets/ai_avatar.png" mode="aspectFill" class="avatar-img"/>
-          </view>
-          <view class="message-bubble typing-bubble">
-             <view class="typing-dot"></view>
-             <view class="typing-dot"></view>
-             <view class="typing-dot"></view>
-          </view>
+
+      <view wx:if="{{isTyping}}" class="message-item ai-message" id="msg-typing">
+        <view class="ai-avatar">
+          <image src="/assets/ai_avatar.png" mode="aspectFill" class="avatar-img" />
+        </view>
+        <view class="typing-indicator">
+          <view class="typing-dot"></view>
+          <view class="typing-dot"></view>
+          <view class="typing-dot"></view>
         </view>
       </view>
-      <!-- 用于自动滚动到底部 -->
-      <view id="msg-bottom" style="height: 40rpx;"></view>
+
+      <view id="msg-bottom" class="msg-bottom"></view>
     </view>
   </scroll-view>
 
   <view class="input-area">
     <view class="input-wrapper">
-      <textarea 
-        class="message-input" 
-        placeholder="给客服发送消息..." 
+      <textarea
+        class="message-input"
+        placeholder="在此输入您的问题..."
         placeholder-class="input-placeholder"
         value="{{inputValue}}"
         bindinput="onInput"
         bindconfirm="sendMessage"
-        cursor-spacing="20"
+        confirm-type="send"
+        cursor-spacing="24"
         auto-height
         maxlength="-1"
         show-confirm-bar="{{false}}"
@@ -63,6 +63,5 @@
         <text class="send-icon">↑</text>
       </view>
     </view>
-    <view class="footer-tip">AI 生成内容仅供参考。</view>
   </view>
 </view>
