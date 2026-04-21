@@ -94,13 +94,18 @@
 .btn-primary {
   margin-top: 42rpx;
   height: 104rpx;
-  line-height: 104rpx;
+  line-height: normal;
   width: 100%;
   border-radius: 54rpx;
   background: #1a73e8;
   color: #ffffff;
   font-size: 32rpx;
   font-weight: 500;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   box-shadow: 0 14rpx 34rpx rgba(26, 115, 232, 0.24);
 }
 

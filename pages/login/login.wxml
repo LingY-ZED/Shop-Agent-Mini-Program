@@ -15,7 +15,7 @@
         <input
           class="input"
           type="text"
-          placeholder="请输入手机号或邮箱"
+          placeholder="请输入用户名"
           placeholder-class="ph-style"
           bindinput="bindUsernameInput"
           value="{{username}}"
